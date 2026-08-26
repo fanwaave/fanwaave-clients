@@ -1,0 +1,6 @@
+name: fanwaave_client
+description: Typed HTTP client for Fanwaave
+version: 0.1.0
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+
