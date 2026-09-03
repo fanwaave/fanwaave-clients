@@ -1,6 +1,11 @@
 import fanwaave_validation_consumer
 import gleam/dynamic
+import gleeunit
 import gleeunit/should
+
+pub fn main() {
+  gleeunit.main()
+}
 
 pub fn validates_before_transport_test() {
   dynamic.properties([
