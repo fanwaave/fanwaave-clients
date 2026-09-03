@@ -37,7 +37,7 @@ jobs:
       - run: cargo test --manifest-path validation-consumer/rust/Cargo.toml
       - run: go test -mod=mod ./...
         working-directory: validation-consumer/golang
-      - uses: erlef/setup-beam@3eea9283e45738923e6709f2f9f0d77a75d074be
+      - uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124
         with:
           otp-version: "28.0"
           gleam-version: "1.14.0"
