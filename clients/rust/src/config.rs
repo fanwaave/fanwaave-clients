@@ -5,7 +5,7 @@ use fanwaave_lib_core::fanwaave_config::{
     parse_fanwaave_config, ConfigValue, ResolvedFanwaaveConfig, FANWAAVE_CONFIG_FILENAME,
 };
 use fanwaave_lib_core::fanwaave_flags2env::{
-    resolve_fanwaave_config_from_argv, FanwaaveFlags2EnvError,
+    resolve_fanwaave_config_from_argv_at, FanwaaveFlags2EnvError,
 };
 use std::collections::BTreeMap;
 use std::fmt;
@@ -101,7 +101,12 @@ impl RuntimeClientConfig {
             source,
         })?;
         let config = parse_fanwaave_config(&text).map_err(FanwaaveFlags2EnvError::from)?;
-        let resolved = resolve_fanwaave_config_from_argv(&config, ambient, argv)?;
+        let contract_root = path
+            .parent()
+            .filter(|parent| !parent.as_os_str().is_empty())
+            .unwrap_or_else(|| Path::new("."));
+        let resolved =
+            resolve_fanwaave_config_from_argv_at(&config, ambient, argv, contract_root)?;
         Self::from_resolved(&resolved)
     }
 
