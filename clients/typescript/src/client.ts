@@ -1,7 +1,15 @@
 import type { ClientConfig } from "./config";
-import { createClientConfig } from "./config";
-import { ClientError } from "./errors";
+import { createClientConfig, tryCreateClientConfig } from "./config";
+import {
+  ClientError,
+  err,
+  ok,
+  type Result,
+} from "./errors";
 import type { Health } from "./types";
+
+export type HealthDecodeResult = Result<Health, "too_large" | "invalid_json">;
+export type ClientCreateResult = Result<Client, "invalid_base">;
 
 export class Client {
   private readonly config: Readonly<ClientConfig>;
@@ -10,18 +18,32 @@ export class Client {
     this.config = createClientConfig(config);
   }
 
+  static tryCreate(config: ClientConfig): ClientCreateResult {
+    const result = tryCreateClientConfig(config);
+    return result.ok ? ok(new Client(result.value)) : err(result.error);
+  }
+
   healthUrl(): string {
     return `${this.config.baseUrl.replace(/\/$/, "")}/v1/health`;
   }
 
-  decodeHealth(body: Uint8Array): Health {
+  tryDecodeHealth(body: Uint8Array): HealthDecodeResult {
     if (body.byteLength > this.config.maxResponseBytes) {
-      throw new ClientError("too_large");
+      return err("too_large");
     }
     try {
-      return JSON.parse(new TextDecoder().decode(body)) as Health;
+      return ok(JSON.parse(new TextDecoder().decode(body)) as Health);
     } catch {
-      throw new ClientError("invalid_json");
+      return err("invalid_json");
     }
+  }
+
+  /** Compatibility wrapper for existing callers that use exception semantics. */
+  decodeHealth(body: Uint8Array): Health {
+    const result = this.tryDecodeHealth(body);
+    if (!result.ok) {
+      throw new ClientError(result.error);
+    }
+    return result.value;
   }
 }
