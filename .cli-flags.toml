@@ -3,7 +3,7 @@ url = "https://github.com/fanwaave/fanwaave-clients"
 columns = ["options", "env", "type", "default", "description"]
 
 [env]
-load = false
+files = []
 
 [parse]
 allow_unknown = false
