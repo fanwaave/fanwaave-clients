@@ -7,7 +7,7 @@ description = "Typed HTTP client for Fanwaave"
 repository = "https://github.com/fanwaave/fanwaave-clients"
 
 [dependencies]
-fanwaave-lib-core = { git = "https://github.com/fanwaave/fanwaave-lib-core.git", rev = "ef00c1995e35e067ec58291fc6678b109e3692d7" }
+fanwaave-lib-core = { git = "https://github.com/fanwaave/fanwaave-lib-core.git", rev = "6bff0ec156290b0774eb5a5091e8de9c8f594ca7" }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 thiserror = "2"
