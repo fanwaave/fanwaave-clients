@@ -4,11 +4,17 @@ on:
   pull_request:
     paths:
       - "clients/rust/**"
+      - ".cli-flags.toml"
+      - ".fanwaave-cfg.toml"
+      - ".ores-mw.toml"
       - ".github/workflows/rust-runtime-config.yml"
   push:
     branches: [main]
     paths:
       - "clients/rust/**"
+      - ".cli-flags.toml"
+      - ".fanwaave-cfg.toml"
+      - ".ores-mw.toml"
       - ".github/workflows/rust-runtime-config.yml"
 
 permissions:
