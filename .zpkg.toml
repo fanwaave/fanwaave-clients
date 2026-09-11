@@ -1,4 +1,21 @@
+[package]
+org = "fanwaave"
 name = "fanwaave-clients"
-kind = "clients"
 version = "0.1.0"
+description = "Polyglot clients for fanwaave"
+license = "MIT"
 
+[dependencies]
+"fanwaave/fanwaave-interfaces" = "^0.1.0"
+"fanwaave/fanwaave-lib-core" = "^0.1.0"
+
+[targets.repository]
+dir = "."
+
+[targets.validation-consumer]
+dir = "validation-consumer"
+adapter = "none"
+
+[publish]
+include_readme = true
+tag_format = "v{version}"

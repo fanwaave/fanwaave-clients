@@ -1,0 +1,38 @@
+version = 1
+mode = "client"
+strict = true
+
+[flags2env]
+contract = ".cli-flags.toml"
+require_audit = true
+precedence = "argv-over-env"
+
+[client]
+enabled = true
+api_base_url_binding = "api_base_url"
+tenant_id_binding = "tenant_id"
+auth_token_binding = "auth_token"
+
+[[env]]
+name = "api_base_url"
+key = "FANWAAVE_API_BASE_URL"
+kind = "url"
+required = false
+secret = false
+description = "Fanwaave API base URL used by generated and hand-written clients."
+
+[[env]]
+name = "tenant_id"
+key = "FANWAAVE_TENANT_ID"
+kind = "string"
+required = false
+secret = false
+description = "Optional Fanwaave tenant identifier."
+
+[[env]]
+name = "auth_token"
+key = "FANWAAVE_AUTH_TOKEN"
+kind = "string"
+required = false
+secret = true
+description = "Fanwaave bearer token; environment/secret-store only and never argv-addressable."

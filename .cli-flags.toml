@@ -1,0 +1,21 @@
+[help]
+url = "https://github.com/fanwaave/fanwaave-clients"
+columns = ["options", "env", "type", "default", "description"]
+
+[env]
+files = []
+
+[parse]
+allow_unknown = false
+
+[flags.api_base_url]
+env = "FANWAAVE_API_BASE_URL"
+aliases = ["api-base", "api-base-url"]
+type = "string"
+help = "Fanwaave API base URL. Domain typing and defaults are owned by .fanwaave-cfg.toml."
+
+[flags.tenant_id]
+env = "FANWAAVE_TENANT_ID"
+aliases = ["tenant-id"]
+type = "string"
+help = "Optional Fanwaave tenant identifier."
