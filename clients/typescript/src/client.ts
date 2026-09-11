@@ -1,12 +1,13 @@
 import type { ClientConfig } from "./config";
+import { createClientConfig } from "./config";
 import { ClientError } from "./errors";
 import type { Health } from "./types";
 
 export class Client {
-  constructor(private readonly config: ClientConfig) {
-    if (!config.baseUrl.trim()) {
-      throw new ClientError("invalid_base");
-    }
+  private readonly config: Readonly<ClientConfig>;
+
+  constructor(config: ClientConfig) {
+    this.config = createClientConfig(config);
   }
 
   healthUrl(): string {
@@ -24,4 +25,3 @@ export class Client {
     }
   }
 }
-
