@@ -15,3 +15,11 @@ temp/
 .tmp/
 tmp/worktrees/
 **/tmp/worktrees/
+
+# Repository-local temporary data and authorized Git worktrees.
+# AGENTS.md names these four literally, so keep the bare forms too; they also
+# cover a plain file (not just a directory) called tmp or temp.
+tmp
+temp
+tmp/worktrees
+temp/worktrees
