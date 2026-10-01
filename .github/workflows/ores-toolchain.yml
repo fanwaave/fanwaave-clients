@@ -1,0 +1,42 @@
+name: ORES toolchain and public RPC policy
+
+on:
+  pull_request:
+    paths:
+      - ".zpkg.toml"
+      - "toolchain/**"
+      - "rpc/**"
+      - "scripts/check-ores-toolchain.mjs"
+      - ".github/workflows/ores-toolchain.yml"
+  push:
+    branches: [main, dev]
+    paths:
+      - ".zpkg.toml"
+      - "toolchain/**"
+      - "rpc/**"
+      - "scripts/check-ores-toolchain.mjs"
+      - ".github/workflows/ores-toolchain.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  policy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out exact head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify revision and policy
+        shell: bash
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          node scripts/check-ores-toolchain.mjs
+          git diff --check
