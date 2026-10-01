@@ -7,7 +7,9 @@ license = "MIT"
 
 [dependencies]
 "fanwaave/fanwaave-interfaces" = "^0.1.0"
-"fanwaave/fanwaave-lib-core" = "^0.1.0"
+"fanwaave/fanwaave-pub-lib-core" = "^0.1.0"
+"oresoftware/api-docs" = "=2.0.3"
+"oresoftware/typespec-json-schema-validator" = "=0.1.1"
 
 [targets.repository]
 dir = "."
