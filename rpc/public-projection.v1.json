@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema": "fanwaave.rpc-public-projection/v1",
+  "sourceRepository": "fanwaave/fanwaave-api-server.rs",
+  "contractAuthority": "fanwaave/fanwaave-interfaces",
+  "audience": "public",
+  "scope": "regular",
+  "canonicalGenerator": "ores-stack/ores-stack-cli",
+  "transitionalGenerator": "ORESoftware/ores-stack",
+  "requiredContractEvidence": {
+    "contractIr": ".typespec-json-schema-validator/contract-ir.json",
+    "parityReport": ".typespec-json-schema-validator/report.json"
+  },
+  "generatedLayout": {
+    "rust": "src/langs/rust/generated",
+    "golang": "src/langs/golang/generated",
+    "dart": "src/langs/dart/generated",
+    "typescript": "src/langs/typescript/generated",
+    "gleam": "src/langs/gleam/generated",
+    "manifest": "generated/rpc/regular/manifest.json"
+  },
+  "operations": [
+    {
+      "key": "fanwaave.health.get",
+      "requiredAudience": "browser",
+      "requiredScope": "regular",
+      "status": "awaiting-server-operation-authority"
+    }
+  ],
+  "rules": {
+    "allowAdminScope": false,
+    "allowAudienceWidening": false,
+    "allowHandAuthoredGeneratedSources": false,
+    "requireOperationIndexDigest": true,
+    "requireApiServerCommit": true,
+    "requireContractIrReceiptBinding": true
+  }
+}
