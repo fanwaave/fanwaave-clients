@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema": "fanwaave.ores-toolchain/v1",
+  "repository": "fanwaave/fanwaave-clients",
+  "authorities": {
+    "contracts": "fanwaave/fanwaave-interfaces",
+    "publicCore": "fanwaave/fanwaave-pub-lib-core"
+  },
+  "tools": [
+    {
+      "repository": "ORESoftware/api-docs",
+      "commit": "27dd97e23f1e06dc1a68eb2d80d83fc25d3ae24e",
+      "package": "oresoftware/api-docs@2.0.3",
+      "role": "rpc-runtime-docs-and-polyglot-generation",
+      "admission": "active"
+    },
+    {
+      "repository": "ORESoftware/typespec-json-schema-validator",
+      "commit": "69337efc11ba4ecaa90b48878c942384fc74f650",
+      "package": "oresoftware/typespec-json-schema-validator@0.1.1",
+      "role": "peer-authority-contract-ir",
+      "admission": "active"
+    },
+    {
+      "repository": "ORESoftware/ores-wit",
+      "commit": "0cbf2bb1ad5f79c0f91864342ddf331892ec2648",
+      "package": "oresoftware/ores-wit@0.1.0",
+      "role": "wit-projection-and-binding-orchestration",
+      "admission": "blocked-upstream",
+      "blocker": "ORESoftware/ores-wit#4 requires a Cargo-generated Cargo.lock before the locked package may be consumed"
+    },
+    {
+      "repository": "ores-stack/ores-stack-cli",
+      "commit": "cf14986e887a8bdf0f20aee7e80885e3c0c9bb11",
+      "package": "ores-stack/ores-stack-cli@0.1.0",
+      "role": "canonical-ores-stack-identity",
+      "admission": "blocked-upstream",
+      "blocker": "MIGRATION.md still marks the complete ores-stack-core dependency, remaining CLI modules, and lock/config closure incomplete"
+    },
+    {
+      "repository": "ORESoftware/ores-stack",
+      "commit": "2fd66cfaaf0d014f0e27cf29eae6a943928724c5",
+      "package": "oresoftware/ores-stack@0.1.0",
+      "role": "temporary-executable-rpc-generator",
+      "admission": "transitional",
+      "sunset": "Remove after ores-stack/ores-stack-cli publishes a promotion-complete build with equivalent RPC sync receipts"
+    }
+  ],
+  "referenceFleets": [
+    "ores-chat",
+    "ores-forms",
+    "ores-dnd",
+    "ores-convo",
+    "ores-otel"
+  ]
+}

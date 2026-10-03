@@ -1,13 +1,8 @@
 #![forbid(unsafe_code)]
 
+pub use fanwaave_interfaces::Health;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
-
-#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
-pub struct Health {
-    pub ok: bool,
-    pub service: String,
-}
 
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 pub struct ResourceEnvelope {
