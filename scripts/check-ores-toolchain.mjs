@@ -15,6 +15,20 @@ assert.equal(toolchain.authorities.contracts, "fanwaave/fanwaave-interfaces");
 assert.equal(toolchain.authorities.publicCore, "fanwaave/fanwaave-pub-lib-core");
 
 const tools = new Map(toolchain.tools.map((tool) => [tool.repository, tool]));
+assert.equal(tools.size, toolchain.tools.length, "toolchain repository entries must be unique");
+const admissions = new Set(["active", "blocked-upstream", "transitional"]);
+for (const tool of toolchain.tools) {
+  assert.match(tool.repository, /^[A-Za-z0-9._-]+\/[A-Za-z0-9._-]+$/, "invalid repository identity");
+  assert.match(tool.commit, /^[0-9a-f]{40}$/, `${tool.repository} must be SHA pinned`);
+  assert.ok(admissions.has(tool.admission), `unknown admission: ${tool.repository}`);
+  if (tool.admission === "blocked-upstream") {
+    assert.ok(tool.blocker?.trim(), `missing blocker: ${tool.repository}`);
+  }
+  if (tool.admission === "transitional") {
+    assert.ok(tool.sunset?.trim(), `transitional tool lacks sunset: ${tool.repository}`);
+  }
+}
+
 for (const repository of [
   "ORESoftware/api-docs",
   "ORESoftware/typespec-json-schema-validator",
@@ -43,6 +57,11 @@ assert.equal(projection.rules.allowAdminScope, false);
 assert.equal(projection.rules.allowAudienceWidening, false);
 assert.equal(projection.rules.allowHandAuthoredGeneratedSources, false);
 assert.ok(projection.operations.length > 0, "at least one public operation must be declared");
+assert.equal(
+  new Set(projection.operations.map((operation) => operation.key)).size,
+  projection.operations.length,
+  "public operation keys must be unique",
+);
 for (const operation of projection.operations) {
   assert.match(operation.key, /^[a-z0-9]+(?:[._-][a-z0-9]+)+$/);
   assert.equal(operation.requiredAudience, "browser");
