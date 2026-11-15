@@ -1,0 +1,11 @@
+[package]
+name = "fanwaave-validation-import-check"
+version = "0.1.0"
+edition = "2021"
+publish = false
+rust-version = "1.88"
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[workspace]
