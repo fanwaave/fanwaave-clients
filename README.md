@@ -34,3 +34,7 @@ node --test test/atto-admission.test.mjs
 ```
 
 Compilation and execution of the `.atto` functions require the upstream AttoLang toolchain and are **not** proven by the Node admission test.
+
+## Rust-first AttoLang verification
+
+Run the canonical Rust integration tests with `cargo test --manifest-path clients/rust/Cargo.toml --test atto_admission`. They reject admin operation/audience widening, missing security guarantees, false transport claims, and untrusted authority. The workflow runs `cargo fmt`, Rust integration tests, and Clippy on the exact PR SHA. Earlier Node tests remain temporarily for parity review; do not introduce Python test scripts. This does not prove .atto compiler execution or actual HTTP transports.
