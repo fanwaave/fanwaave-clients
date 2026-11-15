@@ -22,7 +22,9 @@ pub fn validate_contents(all_text: &str) -> Result<(), String> {
     }
     for forbidden in FORBIDDEN {
         if all_text.contains(forbidden) {
-            return Err(format!("client imported server-only validation package: {forbidden}"));
+            return Err(format!(
+                "client imported server-only validation package: {forbidden}"
+            ));
         }
     }
     Ok(())
