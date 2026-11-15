@@ -22,3 +22,15 @@ Run the repository-local policy check with:
 ```sh
 node scripts/check-ores-toolchain.mjs
 ```
+
+## Experimental AttoLang support
+
+`clients/atto/health.atto` contains transport-independent health response predicates in AttoLang. `clients/atto/contract-binding.v1.json` binds the file to the existing public health-only RPC projection without claiming that an HTTP transport or RPC generator exists yet. This is **contract-only, tier 3**, not a production-ready SDK. An eventual transport must enforce HTTPS, bearer-header handling, bounded responses, and admit a generated operation index with Contract IR/peer-authority receipts; admin scope cannot be widened.
+
+The Node admission test enforces the cross-file policy, including negative cases for admin operations, audience widening and missing security flags:
+
+```sh
+node --test test/atto-admission.test.mjs
+```
+
+Compilation and execution of the `.atto` functions require the upstream AttoLang toolchain and are **not** proven by the Node admission test.
