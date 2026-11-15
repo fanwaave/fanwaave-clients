@@ -3,10 +3,10 @@
 use std::path::Path;
 
 const REQUIRED: [&str; 4] = [
-    "@fanwaave/fanwaave-validation",
-    "fanwaave-validation",
-    "github.com/fanwaave/fanwaave-lib-core/validation/golang",
-    "fanwaave_validation",
+    "\"@fanwaave/fanwaave-validation\":",
+    "fanwaave-validation =",
+    "require github.com/fanwaave/fanwaave-lib-core/validation/golang ",
+    "fanwaave_validation =",
 ];
 
 fn safe_text() -> String {
