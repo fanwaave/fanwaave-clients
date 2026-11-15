@@ -54,3 +54,7 @@ tier = 3
 
 [languages.shell]
 tier = 3
+
+[languages.atto]
+tier = 3
+status = "contract-only"

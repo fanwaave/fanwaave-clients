@@ -1,0 +1,23 @@
+// Experimental public health response policy for AttoLang consumers.
+// Pure predicates only: no network, token handling, or generated RPC source.
+// An HTTP transport must enforce HTTPS and bearer headers independently.
+pub fnc valid_health_status(int status_code): bool {
+  return status_code == 200;
+}
+
+pub fnc within_response_budget(int payload_bytes, int max_response_bytes): bool {
+  if payload_bytes < 0 then
+    return false;
+  fi
+  if max_response_bytes < 1 then
+    return false;
+  fi
+  return payload_bytes <= max_response_bytes;
+}
+
+pub fnc accept_health_response(int status_code, int payload_bytes, int max_response_bytes): bool {
+  if status_code == 200 then
+    return within_response_budget(payload_bytes, max_response_bytes);
+  fi
+  return false;
+}

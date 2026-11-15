@@ -22,3 +22,23 @@ Run the repository-local policy check with:
 ```sh
 node scripts/check-ores-toolchain.mjs
 ```
+
+## Experimental AttoLang support
+
+`clients/atto/health.atto` contains transport-independent health response predicates in AttoLang. `clients/atto/contract-binding.v1.json` binds the file to the existing public health-only RPC projection without claiming that an HTTP transport or RPC generator exists yet. This is **contract-only, tier 3**, not a production-ready SDK. An eventual transport must enforce HTTPS, bearer-header handling, bounded responses, and admit a generated operation index with Contract IR/peer-authority receipts; admin scope cannot be widened.
+
+The Node admission test enforces the cross-file policy, including negative cases for admin operations, audience widening and missing security flags:
+
+```sh
+node --test test/atto-admission.test.mjs
+```
+
+Compilation and execution of the `.atto` functions require the upstream AttoLang toolchain and are **not** proven by the Node admission test.
+
+## Rust-first AttoLang verification
+
+Run the canonical Rust integration tests with `cargo test --manifest-path clients/rust/Cargo.toml --test atto_admission`. They reject admin operation/audience widening, missing security guarantees, false transport claims, and untrusted authority. The workflow runs `cargo fmt`, Rust integration tests, and Clippy on the exact PR SHA. Earlier Node tests remain temporarily for parity review; do not introduce Python test scripts. This does not prove .atto compiler execution or actual HTTP transports.
+
+### Isolated Rust contract gate
+
+`cargo test --manifest-path tools/atto-admission-rs/Cargo.toml --all-targets` runs the public Atto contract checks independently of the main client crate. This isolation is necessary because the existing main Rust client currently fails to resolve `fanwaave_lib_core` (a separate, pre-existing build issue). The historical Rust client integration test and Node-based checks remain for parity review. The isolated contract gate does **not** declare the main Rust client build or FP ratchet green.

@@ -1,0 +1,15 @@
+{
+  "schema": "fanwaave.atto-client-binding/v1",
+  "language": "atto",
+  "admission": "contract-only",
+  "contractAuthority": "fanwaave/fanwaave-interfaces",
+  "operation": "fanwaave.health.get",
+  "audience": "browser",
+  "scope": "regular",
+  "security": {
+    "httpsOnly": true,
+    "bearerHeader": true,
+    "boundedResponse": true
+  },
+  "transportImplemented": false
+}
