@@ -2,9 +2,9 @@ name: AttoLang client admission
 on:
   push:
     branches: [dev]
-    paths: ['clients/atto/**', 'clients/support-matrix.toml', 'clients/rust/tests/atto_admission.rs', 'rpc/public-projection.v1.json', '.github/workflows/atto-admission.yml']
+    paths: ['clients/atto/**', 'clients/support-matrix.toml', 'clients/rust/tests/atto_admission.rs', 'tools/atto-admission-rs/**', 'rpc/public-projection.v1.json', '.github/workflows/atto-admission.yml']
   pull_request:
-    paths: ['clients/atto/**', 'clients/support-matrix.toml', 'clients/rust/tests/atto_admission.rs', 'rpc/public-projection.v1.json', '.github/workflows/atto-admission.yml']
+    paths: ['clients/atto/**', 'clients/support-matrix.toml', 'clients/rust/tests/atto_admission.rs', 'tools/atto-admission-rs/**', 'rpc/public-projection.v1.json', '.github/workflows/atto-admission.yml']
 permissions:
   contents: read
 jobs:
@@ -27,6 +27,9 @@ jobs:
         with:
           toolchain: 1.88.0
           components: rustfmt, clippy
-      - run: cargo fmt --manifest-path clients/rust/Cargo.toml --check
-      - run: cargo test --manifest-path clients/rust/Cargo.toml --test atto_admission
-      - run: cargo clippy --manifest-path clients/rust/Cargo.toml --test atto_admission -- -D warnings
+      - name: Check focused Rust test crate formatting
+        run: cargo fmt --manifest-path tools/atto-admission-rs/Cargo.toml --check
+      - name: Run real Rust contract tests
+        run: cargo test --manifest-path tools/atto-admission-rs/Cargo.toml --all-targets
+      - name: Lint focused Rust test crate
+        run: cargo clippy --manifest-path tools/atto-admission-rs/Cargo.toml --all-targets -- -D warnings

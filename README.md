@@ -38,3 +38,7 @@ Compilation and execution of the `.atto` functions require the upstream AttoLang
 ## Rust-first AttoLang verification
 
 Run the canonical Rust integration tests with `cargo test --manifest-path clients/rust/Cargo.toml --test atto_admission`. They reject admin operation/audience widening, missing security guarantees, false transport claims, and untrusted authority. The workflow runs `cargo fmt`, Rust integration tests, and Clippy on the exact PR SHA. Earlier Node tests remain temporarily for parity review; do not introduce Python test scripts. This does not prove .atto compiler execution or actual HTTP transports.
+
+### Isolated Rust contract gate
+
+`cargo test --manifest-path tools/atto-admission-rs/Cargo.toml --all-targets` runs the public Atto contract checks independently of the main client crate. This isolation is necessary because the existing main Rust client currently fails to resolve `fanwaave_lib_core` (a separate, pre-existing build issue). The historical Rust client integration test and Node-based checks remain for parity review. The isolated contract gate does **not** declare the main Rust client build or FP ratchet green.
