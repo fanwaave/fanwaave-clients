@@ -5,7 +5,9 @@ fn source_json(source: &str) -> Value {
     serde_json::from_str(source).expect("valid JSON source")
 }
 fn binding() -> Value {
-    source_json(include_str!("../../../clients/atto/contract-binding.v1.json"))
+    source_json(include_str!(
+        "../../../clients/atto/contract-binding.v1.json"
+    ))
 }
 fn projection() -> Value {
     source_json(include_str!("../../../rpc/public-projection.v1.json"))
@@ -58,7 +60,10 @@ fn admits_public_health_contract_only() {
 #[test]
 fn support_matrix_is_explicitly_experimental() {
     let matrix = include_str!("../../../clients/support-matrix.toml");
-    let atto = matrix.split("[languages.atto]").nth(1).expect("AttoLang entry");
+    let atto = matrix
+        .split("[languages.atto]")
+        .nth(1)
+        .expect("AttoLang entry");
     assert!(atto.contains("tier = 3"));
     assert!(atto.contains("status = \"contract-only\""));
 }
